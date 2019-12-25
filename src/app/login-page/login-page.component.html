@@ -1,0 +1,24 @@
+<div class="box">
+  <div class="sub-box">
+    <label>Login: </label>
+    <div>
+      <input type="text" [(ngModel)]="username" />
+    </div>
+  </div>
+  <div class="sub-box">
+    <label>Password: </label>
+    <div>
+      <input
+        type="password"
+        [(ngModel)]="password"
+        (keyup.enter)="loginOnClick($event)"
+      />
+    </div>
+  </div>
+  <div class="sub-box">
+    <button (click)="login()">Login</button>
+  </div>
+  <div class="sub-box" *ngIf="loginError">
+    Bad credentials try again!
+  </div>
+</div>

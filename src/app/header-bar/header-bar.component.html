@@ -1,0 +1,17 @@
+<div class="box">
+  <div class="sub-box">
+    <div>
+      <a routerLink="/topics" routerLinkActive="active">TOPICS</a>
+    </div>
+    <div>
+      <a routerLink="/posts" routerLinkActive="active">POSTS</a>
+    </div>
+  </div>
+  <div class="sub-box" *ngIf="isLogged()">
+    {{ getUsername() }} <br />
+    ({{ getUuid() }})
+  </div>
+  <div class="sub-box" *ngIf="isLogged()">
+    <button (click)="logout()">Logout</button>
+  </div>
+</div>
