@@ -1,17 +1,37 @@
-<div class="box">
-  <div class="sub-box">
-    <div>
-      <a routerLink="/topics" routerLinkActive="active">TOPICS</a>
-    </div>
-    <div>
-      <a routerLink="/posts" routerLinkActive="active">POSTS</a>
-    </div>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+  <a class="navbar-brand" href="#">FORUM CLIENT</a>
+  <div class="navbar-collapse flex-grow-0 ml-auto" id="navbarSupportedContent">
+    <ul class="navbar-nav text-right">
+      <li class="nav-item">
+        <div class="m-1" *ngIf="isLogged()">
+          <span class="text-light">
+            {{ getUsername() }}
+          </span>
+          <span class="text-light">
+            {{ getUuid() }}
+          </span>
+        </div>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-light m-1">
+          <a routerLink="/topics" routerLinkActive="active">TOPICS</a>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button type="button" class="btn btn-light m-1">
+          <a routerLink="/posts" routerLinkActive="active">POSTS</a>
+        </button>
+      </li>
+      <li class="nav-item">
+        <button
+          type="button"
+          class="btn btn-danger m-1"
+          (click)="logout()"
+          *ngIf="isLogged()"
+        >
+          Logout
+        </button>
+      </li>
+    </ul>
   </div>
-  <div class="sub-box" *ngIf="isLogged()">
-    {{ getUsername() }} <br />
-    ({{ getUuid() }})
-  </div>
-  <div class="sub-box" *ngIf="isLogged()">
-    <button (click)="logout()">Logout</button>
-  </div>
-</div>
+</nav>

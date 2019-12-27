@@ -1,24 +1,23 @@
-<div class="box">
-  <div class="sub-box">
+<div class="d-flex flex-column mr-5 ml-5">
+  <div class="form-group mt-5">
     <label>Login: </label>
     <div>
-      <input type="text" [(ngModel)]="username" />
+      <input class="form-control" type="text" [(ngModel)]="username" />
     </div>
   </div>
-  <div class="sub-box">
+  <div class="form-group">
     <label>Password: </label>
-    <div>
-      <input
-        type="password"
-        [(ngModel)]="password"
-        (keyup.enter)="loginOnClick($event)"
-      />
-    </div>
+    <input
+      class="form-control"
+      type="password"
+      [(ngModel)]="password"
+      (keyup.enter)="loginOnClick($event)"
+    />
   </div>
-  <div class="sub-box">
-    <button (click)="login()">Login</button>
-  </div>
-  <div class="sub-box" *ngIf="loginError">
+  <div class="alert alert-danger mt-3" *ngIf="loginError">
     Bad credentials try again!
   </div>
+  <button type="button" class="btn btn-primary" (click)="login()">
+    Login
+  </button>
 </div>
