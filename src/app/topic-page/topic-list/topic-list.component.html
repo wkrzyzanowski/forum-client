@@ -1,0 +1,39 @@
+<div class="mb-3 d-flex flex-row">
+  <h2 class="col-10">
+    Topic List
+    <small class="text-muted">Choose anything you want...</small>
+  </h2>
+  <button class="btn btn-primary btn-sm col-2" (click)="loadTopics()">
+    Refresh
+  </button>
+</div>
+<div *ngFor="let item of topicUserList" class="card mt-2">
+  <span class="card-header d-flex p-1">
+    <span class="mb-0 col-5"> Author: {{ item.author.nick }} </span>
+    <span class="text-muted col-3">
+      Created: {{ item.topic.creationDate }}</span
+    >
+    <span class="text-muted col-3">
+      Last post: {{ item.topic.lastPostDate }}</span
+    >
+    <button class="btn btn-link btn-sm p-0 col-1">
+      More...
+    </button>
+  </span>
+
+  <div class="card-body d-flex p-1">
+    <span class="col-11">
+      <h5>
+        {{ cutTooLongTitles(item.topic.title) }}
+        <small class="text-muted"> ({{ item.topic.uuid }})</small>
+      </h5>
+    </span>
+    <button
+      (click)="deleteTopic(item.topic)"
+      class="btn btn-danger btn-sm p-0 col-1"
+      *ngIf="isTopicDeletable(item.topic.authorUuid)"
+    >
+      Delete
+    </button>
+  </div>
+</div>

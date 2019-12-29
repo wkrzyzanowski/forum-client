@@ -1,27 +1,15 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark justify-content-end">
+<nav class="navbar bg-dark navbar-dark">
   <a class="navbar-brand" href="#">FORUM CLIENT</a>
-  <div class="navbar-collapse flex-grow-0 ml-auto" id="navbarSupportedContent">
+  <div class="nav-item m-1" *ngIf="isLogged()">
+    <span class="text-light">
+      {{ getUsername() }}
+    </span>
+    <span class="text-light">
+      {{ getUuid() }}
+    </span>
+  </div>
+  <div class="nav-item m-1">
     <ul class="navbar-nav text-right">
-      <li class="nav-item">
-        <div class="m-1" *ngIf="isLogged()">
-          <span class="text-light">
-            {{ getUsername() }}
-          </span>
-          <span class="text-light">
-            {{ getUuid() }}
-          </span>
-        </div>
-      </li>
-      <li class="nav-item">
-        <button type="button" class="btn btn-light m-1">
-          <a routerLink="/topics" routerLinkActive="active">TOPICS</a>
-        </button>
-      </li>
-      <li class="nav-item">
-        <button type="button" class="btn btn-light m-1">
-          <a routerLink="/posts" routerLinkActive="active">POSTS</a>
-        </button>
-      </li>
       <li class="nav-item">
         <button
           type="button"
