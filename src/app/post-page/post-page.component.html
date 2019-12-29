@@ -1,1 +1,12 @@
-<p>post-page works!</p>
+<div class="mt-3">
+  <post-list
+    (loadPostEmitter)="reloadPosts($event)"
+    [topicDetails]="topicDetails"
+    [postListWithDetails]="postListWithDetails"
+  ></post-list>
+  <post-form
+    (loadPostEmitter)="reloadPosts($event)"
+    [topicDetails]="topicDetails"
+    [postListWithDetails]="postListWithDetails"
+  ></post-form>
+</div>

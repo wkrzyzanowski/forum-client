@@ -1,10 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
 import { TopicService } from '../services/topic-service/topic-service.service';
 import { UserService } from 'src/app/global-services/user-service/user-service.service';
 import { LoginService } from 'src/app/global-services/login-service/login-service.service';
-import { UserTopicDTO } from '../model/UserTopicDTO';
+import { TopicWithUserDetails } from '../model/UserTopicDTO';
 import { TopicDTO } from '../model/TopicDTO';
 import { UserDTO } from '../model/UserDTO';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  FormBuilder
+} from '@angular/forms';
 
 @Component({
   selector: 'topic-form',
@@ -12,63 +18,71 @@ import { UserDTO } from '../model/UserDTO';
   styleUrls: ['./topic-form.component.css']
 })
 export class TopicFormComponent implements OnInit {
-  userList: UserDTO[] = [];
-  topicList: TopicDTO[] = [];
-  topicUserList: UserTopicDTO[] = [];
+  createNewTopicForm: FormGroup;
 
-  topicTitleText: string = '';
-  topicTitleFlag: boolean = false;
-  postContentText: string = '';
-  postContentFlag: boolean = false;
+  @Input()
+  topicUserList: TopicWithUserDetails[];
+
+  @Output()
+  loadTopicEmitter: EventEmitter<any> = new EventEmitter();
+
   constructor(
-    private topicService: TopicService,
-    private userService: UserService,
-    private loginService: LoginService
-  ) {}
+    private loginService: LoginService,
+    private topicService: TopicService
+  ) {
+    this.createNewTopicForm = this.createFormGroup();
+  }
 
   ngOnInit() {}
 
   createNewTopic() {
-    if (this.topicTitleFlag && this.postContentFlag) {
+    this.createNewTopicForm
+      .get('authorUuid')
+      .setValue(this.loginService.loggedUser.uuid);
+
+    if (this.createNewTopicForm.valid) {
       this.topicService
         .createNewTopic(
-          this.topicTitleText,
-          this.postContentText,
-          this.loginService.loggedUser.uuid
+          this.createNewTopicForm.get('topicTitle').value,
+          this.createNewTopicForm.get('postContent').value,
+          this.createNewTopicForm.get('authorUuid').value
         )
-        .subscribe(topic => {
-          // this.loadTopics();
+        .subscribe(newTopic => {
+          this.loadTopicEmitter.emit(true);
         });
+      this.createNewTopicForm = this.createFormGroup();
     }
-
-    this.topicTitleFlag = false;
-    this.postContentFlag = false;
-
-    this.topicTitleText = '';
-    this.postContentText = '';
   }
 
-  checkTopicTitleLength() {
-    const isGood = this.checkTextLength(5, this.topicTitleText);
-    this.topicTitleFlag = isGood;
-    return isGood;
-  }
-
-  checkPostContentLength() {
-    const isGood = this.checkTextLength(2, this.postContentText);
-    this.postContentFlag = isGood;
-    return isGood;
-  }
-
-  checkTextLength(min: number, text: string): boolean {
-    if (this.clearWhitespaces(text).length >= min) {
-      return true;
+  topicIsValid() {
+    let topicTitleFormControl = this.createNewTopicForm.get('topicTitle');
+    if (topicTitleFormControl.touched) {
+      return topicTitleFormControl.valid;
     } else {
-      return false;
+      return true;
     }
   }
 
-  clearWhitespaces(text: string) {
-    return text.replace(/\s/g, '');
+  postIsValid() {
+    let postContentFormControl = this.createNewTopicForm.get('postContent');
+    if (postContentFormControl.touched) {
+      return postContentFormControl.valid;
+    } else {
+      return true;
+    }
+  }
+
+  createFormGroup() {
+    return new FormGroup({
+      topicTitle: new FormControl('', [
+        Validators.required,
+        Validators.minLength(5)
+      ]),
+      postContent: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2)
+      ]),
+      authorUuid: new FormControl('', [Validators.required])
+    });
   }
 }

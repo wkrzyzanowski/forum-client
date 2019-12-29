@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
+import { LikeDTO } from './../../../post-page/model/LikeDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -26,5 +27,20 @@ export class TopicService {
         title: topicTitle
       }
     });
+  }
+
+  getTopicByUuidWithPosts(topicUuid: string) {
+    return this.httpService.get('/post-api/mgmt/combined/topic/' + topicUuid);
+  }
+
+  getLikesByTopicUuidAndLoggedUser(topicUuid: string, loggedUserUuid: string) {
+    let params = new HttpParams().set('user', loggedUserUuid);
+    return this.httpService.get('/post-api/mgmt/likes/' + topicUuid, {
+      params: params
+    });
+  }
+
+  sentLike(like: LikeDTO) {
+    return this.httpService.post('/post-api/mgmt/likes', like);
   }
 }

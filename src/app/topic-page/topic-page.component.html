@@ -1,4 +1,10 @@
 <div class="mt-3">
-  <topic-list (userTopicEmitter)="updateTopicList($event)"></topic-list>
-  <topic-form></topic-form>
+  <topic-form
+    (loadTopicEmitter)="reloadTopics($event)"
+    [topicUserList]="topicsSortedByCreationDate()"
+  ></topic-form>
+  <topic-list
+    (loadTopicEmitter)="reloadTopics($event)"
+    [topicUserList]="topicsSortedByCreationDate()"
+  ></topic-list>
 </div>
