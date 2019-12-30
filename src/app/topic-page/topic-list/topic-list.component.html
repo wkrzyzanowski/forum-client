@@ -9,7 +9,12 @@
 </div>
 <div *ngFor="let item of topicUserList" class="card mt-2">
   <span class="card-header d-flex p-1">
-    <span class="mb-0 col-5"> Author: {{ item.author.nick }} </span>
+    <span class="mb-0 col-5">
+      Author: {{ item.author.nick }}
+      <span style="font-size: 10px;"
+        >Last login: {{ item.author.lastLogin }}</span
+      ></span
+    >
     <span class="text-muted col-3">
       Created: {{ item.topic.creationDate }}</span
     >
@@ -30,6 +35,9 @@
           {{ cutTooLongTitles(item.topic.title) }}
         </a>
         <small class="text-muted"> ({{ item.topic.uuid }})</small>
+        <span class="pl-1" style="color: red;" *ngIf="!item.topic.active">
+          CLOSED
+        </span>
       </h5>
     </span>
     <button

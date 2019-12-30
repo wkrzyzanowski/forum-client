@@ -12,6 +12,7 @@ import { BehaviorSubject } from 'rxjs';
 import { TopicWithPostResponse } from './model/TopicWithPostResponse';
 import { UserService } from './../global-services/user-service/user-service.service';
 import { ThrowStmt } from '@angular/compiler';
+import { LoginService } from '../global-services/login-service/login-service.service';
 
 @Component({
   selector: 'post-page',
@@ -22,11 +23,15 @@ export class PostPageComponent implements OnInit {
   private topicId: string;
   private routerSub: any;
 
+  isTopicActive: boolean = false;
+  topicManageable: boolean = false;
+
   topicDetails: TopicWithUserDetails;
   postListWithDetails: PostWithUserDetails[];
 
   constructor(
     private route: ActivatedRoute,
+    private loginService: LoginService,
     private topicService: TopicService,
     private userService: UserService
   ) {}
@@ -56,6 +61,11 @@ export class PostPageComponent implements OnInit {
     this.topicService
       .getTopicByUuidWithPosts(this.topicId)
       .subscribe((topicWithPost: TopicWithPostResponse) => {
+        this.isTopicActive = topicWithPost.topic.active;
+        this.topicManageable = this.canUserManageTopic(
+          topicWithPost.topic.authorUuid
+        );
+
         let userUuids = new Set<string>();
 
         userUuids.add(topicWithPost.topic.authorUuid);
@@ -97,5 +107,9 @@ export class PostPageComponent implements OnInit {
       }
     });
     return found;
+  }
+
+  canUserManageTopic(authorUuid: string) {
+    return this.loginService.loggedUser.uuid === authorUuid;
   }
 }

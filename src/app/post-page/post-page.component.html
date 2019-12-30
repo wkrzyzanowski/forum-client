@@ -1,10 +1,13 @@
 <div class="mt-3">
   <post-list
     (loadPostEmitter)="reloadPosts($event)"
+    [isTopicActive]="isTopicActive"
+    [topicManageable]="topicManageable"
     [topicDetails]="topicDetails"
     [postListWithDetails]="postListWithDetails"
   ></post-list>
   <post-form
+    *ngIf="isTopicActive"
     (loadPostEmitter)="reloadPosts($event)"
     [topicDetails]="topicDetails"
     [postListWithDetails]="postListWithDetails"

@@ -1,10 +1,26 @@
 <div class="mb-3 d-flex flex-row">
-  <h2 class="col-10">
+  <h2 class="col-9">
     Topic
     <small class="text-muted" *ngIf="topicDetails">{{
       topicDetails.topic.title
     }}</small>
   </h2>
+  <div class="col-1 d-flex justify-content-end p-0">
+    <button
+      *ngIf="!isTopicActive && topicManageable"
+      class="btn btn-success btn-sm  mr-2"
+      (click)="manageTopicStatus('active')"
+    >
+      Open
+    </button>
+    <button
+      *ngIf="isTopicActive && topicManageable"
+      class="btn btn-danger btn-sm  mr-2"
+      (click)="manageTopicStatus('inactive')"
+    >
+      Close
+    </button>
+  </div>
   <div class="col-1 d-flex justify-content-end p-0">
     <button class="btn btn-primary btn-sm  mr-2" (click)="reloadPosts()">
       Refresh
@@ -16,15 +32,24 @@
     </button>
   </div>
 </div>
+<div *ngIf="!isTopicActive" class="col-12 d-flex justify-content-center">
+  <span style="color: red;">CLOSED TOPIC</span>
+</div>
 <div *ngFor="let item of postListWithDetails" class="card mt-2">
   <span class="card-header d-flex p-1">
-    <span class="mb-0 col-5"> Author: {{ item.author.nick }} </span>
+    <span class="mb-0 col-5">
+      Author: {{ item.author.nick }}
+      <span style="font-size: 10px;"
+        >Last login: {{ item.author.lastLogin }}</span
+      ></span
+    >
     <span class="text-muted col-3">
       Created: {{ item.post.creationDate }}
     </span>
     <span class="text-muted col-2 d-flex justify-content-center">
       Likes: {{ item.post.likes }}
       <button
+        *ngIf="isTopicActive"
         class="btn btn-success btn-sm ml-2"
         [disabled]="!item.canLike"
         (click)="like(item.post.uuid, topicDetails.topic.uuid)"
@@ -35,6 +60,7 @@
     <span class="text-muted col-2 d-flex justify-content-center">
       Dislikes: {{ item.post.dislikes }}
       <button
+        *ngIf="isTopicActive"
         class="btn btn-danger btn-sm ml-2"
         [disabled]="!item.canDislike"
         (click)="dislike(item.post.uuid, topicDetails.topic.uuid)"
@@ -50,7 +76,7 @@
     <button
       (click)="deletePost(item.post)"
       class="btn btn-danger btn-sm p-0 col-1"
-      *ngIf="isPostRemovable(item.post.authorUuid)"
+      *ngIf="isPostRemovable(item.post.authorUuid) && isTopicActive"
     >
       Delete
     </button>

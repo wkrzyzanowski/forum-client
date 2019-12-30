@@ -14,6 +14,7 @@ import { TopicService } from './../../topic-page/services/topic-service/topic-se
 import { LikeDTO } from '../model/LikeDTO';
 import { LoginService } from './../../global-services/login-service/login-service.service';
 import { PostDTO } from './../model/PostDTO';
+import { TopicDTO } from '../../topic-page/model/TopicDTO';
 
 @Component({
   selector: 'post-list',
@@ -23,6 +24,12 @@ import { PostDTO } from './../model/PostDTO';
 export class PostListComponent implements OnInit {
   @Output()
   loadPostEmitter: EventEmitter<boolean> = new EventEmitter();
+
+  @Input()
+  isTopicActive: boolean;
+
+  @Input()
+  topicManageable: boolean;
 
   @Input()
   topicDetails: TopicWithUserDetails;
@@ -122,6 +129,18 @@ export class PostListComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  manageTopicStatus(status: string) {
+    let confirmation = confirm('Are you sure to close this topic ?');
+
+    if (confirmation === true) {
+      this.topicService
+        .changeTopicStatus(this.topicDetails.topic.uuid, status)
+        .subscribe((response: TopicDTO) => {
+          this.loadPostEmitter.emit(true);
+        });
     }
   }
 

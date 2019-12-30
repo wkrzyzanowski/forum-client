@@ -1,18 +1,19 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpResponse } from "@angular/common/http";
-import { CookieService } from "ngx-cookie-service";
-import { Observable, BehaviorSubject } from "rxjs";
-import * as jwt_decode from "jwt-decode";
-import { Router } from "@angular/router";
-import { AuthResponse } from "../AuthResponse";
-import { LoggedUser } from "../LoggedUser";
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpResponse } from '@angular/common/http';
+import { CookieService } from 'ngx-cookie-service';
+import { Observable, BehaviorSubject } from 'rxjs';
+import * as jwt_decode from 'jwt-decode';
+import { Router } from '@angular/router';
+import { AuthResponse } from '../AuthResponse';
+import { LoggedUser } from '../LoggedUser';
+import { UserDTO } from '../../topic-page/model/UserDTO';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class LoginService {
   loggedIn = false;
-  loggedUser: LoggedUser = new LoggedUser("empty", "empty");
+  loggedUser: LoggedUser = new LoggedUser('empty', 'empty');
 
   constructor(
     private httpService: HttpClient,
@@ -22,8 +23,8 @@ export class LoginService {
 
   isAuthenticated() {
     return new Promise((resolve, reject) => {
-      if (this.cookieService.check("jwt")) {
-        const token: string = this.cookieService.get("jwt");
+      if (this.cookieService.check('jwt')) {
+        const token: string = this.cookieService.get('jwt');
 
         if (this.isTokenExpired(token)) {
           this.loggedIn = false;
@@ -42,17 +43,17 @@ export class LoginService {
     this.cookieService.deleteAll();
     this.loggedUser = undefined;
     this.loggedIn = false;
-    this.router.navigateByUrl("/login");
+    this.router.navigateByUrl('/login');
   }
 
   getTokenAndUser(login: string, pass: string) {
     return this.httpService.post(
-      "/user-api/auth/login",
+      '/user-api/auth/login',
       {
         username: login,
         password: pass
       },
-      { observe: "response" }
+      { observe: 'response' }
     );
   }
 
@@ -68,7 +69,7 @@ export class LoginService {
 
   isTokenExpired(token?: string): boolean {
     if (!token) {
-      token = this.cookieService.get("jwt");
+      token = this.cookieService.get('jwt');
     }
     if (!token) {
       return true;
@@ -78,5 +79,9 @@ export class LoginService {
       return false;
     }
     return !(date.valueOf() > new Date().valueOf());
+  }
+
+  createNewUser(user: UserDTO) {
+    return this.httpService.post('/user-api/mgmt/users', user);
   }
 }

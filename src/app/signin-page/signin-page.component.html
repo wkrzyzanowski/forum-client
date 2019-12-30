@@ -1,0 +1,89 @@
+<form [formGroup]="createNewUserForm" (ngSubmit)="createNewUser()">
+  <div class="d-flex flex-column mr-5 ml-5">
+    <div class="form-group mt-5">
+      <label>Nick: </label>
+      <input
+        class="form-control"
+        type="text"
+        formControlName="nick"
+        placeholder="min. 5 letters/digits"
+      />
+      <div class="alert alert-danger mt-1" *ngIf="!isNickValid()">
+        Nick should consist min. 5 letters or digits!
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Email: </label>
+      <input
+        class="form-control"
+        type="email"
+        formControlName="email"
+        placeholder="test@test.com"
+      />
+      <div class="alert alert-danger mt-1" *ngIf="!isEmailValid()">
+        Email should has correct email form!
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Repeat email: </label>
+      <input
+        class="form-control"
+        type="email"
+        formControlName="emailRepeat"
+        placeholder="test@test.com"
+      />
+      <div class="alert alert-danger mt-1" *ngIf="!isEmailRepeatValid()">
+        Email should has correct email form! And should be the same as email
+        above!
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Password: </label>
+      <input
+        class="form-control"
+        type="password"
+        formControlName="password"
+        placeholder="min. 4 letters/digits"
+      />
+      <div class="alert alert-danger mt-1" *ngIf="!isPasswordValid()">
+        Password should consist min. 4 letters or digits!
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label>Repeat password: </label>
+      <input
+        class="form-control"
+        type="password"
+        formControlName="passwordRepeat"
+        placeholder="min. 4 letters/digits"
+      />
+      <div class="alert alert-danger mt-1" *ngIf="!isPasswordRepeatValid()">
+        Password should consist min. 4 letters or digits! And should be the same
+        as password above!
+      </div>
+    </div>
+
+    <div class="alert alert-danger mt-1" *ngIf="isCreationFailure">
+      Something went wrong! Try to use other credentials!
+    </div>
+
+    <div class="alert alert-success mt-1" *ngIf="isCreationSuccess">
+      User successfully created now you can go to login page!
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-1">
+      Create new user
+    </button>
+    <button
+      type="button"
+      class="btn btn-primary mt-1"
+      (click)="goToLoginPage()"
+    >
+      Go to login page!
+    </button>
+  </div>
+</form>

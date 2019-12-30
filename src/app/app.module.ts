@@ -18,6 +18,7 @@ import { TopicFormComponent } from './topic-page/topic-form/topic-form.component
 import { TopicListComponent } from './topic-page/topic-list/topic-list.component';
 import { PostListComponent } from './post-page/post-list/post-list.component';
 import { PostFormComponent } from './post-page/post-form/post-form.component';
+import { SigninPageComponent } from './signin-page/signin-page.component';
 
 const appRoutes: Routes = [
   {
@@ -27,6 +28,10 @@ const appRoutes: Routes = [
   {
     path: 'login',
     component: LoginPageComponent
+  },
+  {
+    path: 'signin',
+    component: SigninPageComponent
   },
   {
     path: 'topics',
@@ -55,7 +60,8 @@ const appRoutes: Routes = [
     TopicFormComponent,
     TopicListComponent,
     PostListComponent,
-    PostFormComponent
+    PostFormComponent,
+    SigninPageComponent
   ],
   imports: [
     BrowserModule,

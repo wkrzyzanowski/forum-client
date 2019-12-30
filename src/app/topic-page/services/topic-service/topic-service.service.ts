@@ -55,4 +55,15 @@ export class TopicService {
   sentLike(like: LikeDTO) {
     return this.httpService.post('/post-api/mgmt/likes', like);
   }
+
+  changeTopicStatus(topicUuid: string, status: string) {
+    let params = new HttpParams().set('status', status);
+    return this.httpService.put(
+      '/post-api/mgmt/combined/topic/' + topicUuid,
+      null,
+      {
+        params: params
+      }
+    );
+  }
 }
