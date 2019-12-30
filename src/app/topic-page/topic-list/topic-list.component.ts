@@ -40,7 +40,7 @@ export class TopicListComponent implements OnInit {
 
     if (confirmation === true) {
       this.topicService
-        .deletePostByUuid(topic.uuid)
+        .deleteTopicByUuidWithAllPosts(topic.uuid)
         .subscribe((response: TopicDTO) => {
           this.loadTopicEmitter.emit(true);
         });

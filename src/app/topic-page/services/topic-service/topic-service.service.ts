@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { LikeDTO } from './../../../post-page/model/LikeDTO';
+import { PostDTO } from './../../../post-page/model/PostDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -12,8 +13,12 @@ export class TopicService {
     return this.httpService.get('/post-api/mgmt/topics');
   }
 
-  deletePostByUuid(postUuid: string) {
+  deleteTopicByUuidWithAllPosts(postUuid: string) {
     return this.httpService.delete('/post-api/mgmt/combined/topic/' + postUuid);
+  }
+
+  deletePostByUuid(postUuid: string) {
+    return this.httpService.delete('/post-api/mgmt/combined/post/' + postUuid);
   }
 
   createNewTopic(topicTitle: string, postContent: string, authorUuid: string) {
@@ -26,6 +31,13 @@ export class TopicService {
         authorUuid: authorUuid,
         title: topicTitle
       }
+    });
+  }
+
+  createNewPost(topicUuid: string, postContent: string, authorUuid: string) {
+    return this.httpService.post('/post-api/mgmt/combined/topic/' + topicUuid, {
+      authorUuid: authorUuid,
+      content: postContent
     });
   }
 

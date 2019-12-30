@@ -13,6 +13,7 @@ import { PostWithUserDetails } from '../model/PostWithUserDetails';
 import { TopicService } from './../../topic-page/services/topic-service/topic-service.service';
 import { LikeDTO } from '../model/LikeDTO';
 import { LoginService } from './../../global-services/login-service/login-service.service';
+import { PostDTO } from './../model/PostDTO';
 
 @Component({
   selector: 'post-list',
@@ -121,6 +122,24 @@ export class PostListComponent implements OnInit {
           }
         }
       }
+    }
+  }
+
+  isPostRemovable(authorUuid: string) {
+    return this.loginService.loggedUser.uuid === authorUuid;
+  }
+
+  deletePost(post: PostDTO) {
+    let confirmation = confirm(
+      'Are you sure to delete this post "' + post.content + '" ?'
+    );
+
+    if (confirmation === true) {
+      this.topicService
+        .deletePostByUuid(post.uuid)
+        .subscribe((response: PostDTO) => {
+          this.loadPostEmitter.emit(true);
+        });
     }
   }
 
