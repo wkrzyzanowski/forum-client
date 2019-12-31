@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -6,15 +6,15 @@ import {
   HttpHandler,
   HttpEvent,
   HttpErrorResponse
-} from "@angular/common/http";
-import { Observable, throwError } from "rxjs";
-import { map, catchError } from "rxjs/operators";
-import { LoginService } from "./../login-service/login-service.service";
-import { CookieService } from "ngx-cookie-service";
-import { Router } from "@angular/router";
+} from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
+import { LoginService } from './../login-service/login-service.service';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Injectable({
-  providedIn: "root"
+  providedIn: 'root'
 })
 export class HttpInterceptorService implements HttpInterceptor {
   constructor(
@@ -27,18 +27,20 @@ export class HttpInterceptorService implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    if (req.url.includes("/auth/login")) {
+    if (req.url.includes('/auth/login')) {
+      return this.continueRequest(next, req);
+    } else if (req.url.endsWith('/mgmt/users')) {
       return this.continueRequest(next, req);
     } else {
-      if (this.cookieService.check("jwt")) {
-        const token: string = this.cookieService.get("jwt");
+      if (this.cookieService.check('jwt')) {
+        const token: string = this.cookieService.get('jwt');
 
-        req = req.clone({ headers: req.headers.set("Authorization", token) });
+        req = req.clone({ headers: req.headers.set('Authorization', token) });
 
         return this.continueRequest(next, req);
       } else {
         this.loginService.logOutCurrentUser();
-        this.router.navigateByUrl("/login");
+        this.router.navigateByUrl('/login');
       }
     }
 
