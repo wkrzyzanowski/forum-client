@@ -1,10 +1,10 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TopicDTO } from '../model/TopicDTO';
+import { TopicDTO } from '../../global-models/TopicDTO';
 import { TopicWithUserDetails } from '../model/UserTopicDTO';
-import { UserDTO } from '../model/UserDTO';
-import { TopicService } from '../services/topic-service/topic-service.service';
-import { UserService } from 'src/app/global-services/user-service/user-service.service';
-import { LoginService } from 'src/app/global-services/login-service/login-service.service';
+import { UserDTO } from '../../global-models/UserDTO';
+import { TopicPostService } from '../../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
+import { UserService } from 'src/app/global-services/http-services/user-service/user-service.service';
+import { LoginService } from 'src/app/global-services/http-services/login-service/login-service.service';
 
 @Component({
   selector: 'topic-list',
@@ -19,7 +19,7 @@ export class TopicListComponent implements OnInit {
   loadTopicEmitter: EventEmitter<any> = new EventEmitter();
 
   constructor(
-    private topicService: TopicService,
+    private topicService: TopicPostService,
     private loginService: LoginService
   ) {}
 

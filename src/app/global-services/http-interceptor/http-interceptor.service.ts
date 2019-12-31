@@ -9,7 +9,7 @@ import {
 } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
-import { LoginService } from './../login-service/login-service.service';
+import { LoginService } from '../http-services/login-service/login-service.service';
 import { CookieService } from 'ngx-cookie-service';
 import { Router } from '@angular/router';
 

@@ -1,9 +1,9 @@
 import { Component, OnInit, SimpleChanges, Input } from "@angular/core";
-import { LoginService } from "./../global-services/login-service/login-service.service";
-import { AuthResponse } from "../global-services/AuthResponse";
+import { LoginService } from "../global-services/http-services/login-service/login-service.service";
+import { AuthResponse } from "../global-services/http-services/login-service/AuthResponse";
 import { BehaviorSubject } from "rxjs";
 import { CookieService } from "ngx-cookie-service";
-import { LoggedUser } from "../global-services/LoggedUser";
+import { LoggedUser } from "../global-models/LoggedUser";
 
 @Component({
   selector: "header-bar",

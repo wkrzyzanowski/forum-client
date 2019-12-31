@@ -4,9 +4,9 @@ import { CookieService } from 'ngx-cookie-service';
 import { Observable, BehaviorSubject } from 'rxjs';
 import * as jwt_decode from 'jwt-decode';
 import { Router } from '@angular/router';
-import { AuthResponse } from '../AuthResponse';
-import { LoggedUser } from '../LoggedUser';
-import { UserDTO } from '../../topic-page/model/UserDTO';
+import { AuthResponse } from './AuthResponse';
+import { LoggedUser } from '../../../global-models/LoggedUser';
+import { UserDTO } from '../../../global-models/UserDTO';
 
 @Injectable({
   providedIn: 'root'
@@ -79,9 +79,5 @@ export class LoginService {
       return false;
     }
     return !(date.valueOf() > new Date().valueOf());
-  }
-
-  createNewUser(user: UserDTO) {
-    return this.httpService.post('/user-api/mgmt/users', user);
   }
 }

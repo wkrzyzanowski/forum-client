@@ -1,11 +1,8 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
-import { TopicWithPostAndUserDetails } from './../model/TopicWithPostAndUserDetails';
 import { TopicWithUserDetails } from './../../topic-page/model/UserTopicDTO';
 import { PostWithUserDetails } from './../model/PostWithUserDetails';
-import { TopicDTO } from 'src/app/topic-page/model/TopicDTO';
-import { BehaviorSubject } from 'rxjs';
-import { LoginService } from 'src/app/global-services/login-service/login-service.service';
-import { TopicService } from 'src/app/topic-page/services/topic-service/topic-service.service';
+import { LoginService } from 'src/app/global-services/http-services/login-service/login-service.service';
+import { TopicPostService } from 'src/app/global-services/http-services/topic-and-post-service/topic-and-post-service.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
@@ -27,7 +24,7 @@ export class PostFormComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private topicService: TopicService
+    private topicService: TopicPostService
   ) {
     this.createNewPostForm = this.createFormGroup();
   }
@@ -50,7 +47,7 @@ export class PostFormComponent implements OnInit {
           this.createNewPostForm.get('postContent').value,
           this.createNewPostForm.get('authorUuid').value
         )
-        .subscribe(newPost => {
+        .subscribe(() => {
           this.loadPostEmitter.emit(true);
         });
       this.createNewPostForm = this.createFormGroup();

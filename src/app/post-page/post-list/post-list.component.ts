@@ -10,11 +10,11 @@ import {
 import { Router, ActivatedRoute } from '@angular/router';
 import { TopicWithUserDetails } from 'src/app/topic-page/model/UserTopicDTO';
 import { PostWithUserDetails } from '../model/PostWithUserDetails';
-import { TopicService } from './../../topic-page/services/topic-service/topic-service.service';
-import { LikeDTO } from '../model/LikeDTO';
-import { LoginService } from './../../global-services/login-service/login-service.service';
-import { PostDTO } from './../model/PostDTO';
-import { TopicDTO } from '../../topic-page/model/TopicDTO';
+import { TopicPostService } from '../../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
+import { LikeDTO } from '../../global-models/LikeDTO';
+import { LoginService } from '../../global-services/http-services/login-service/login-service.service';
+import { PostDTO } from '../../global-models/PostDTO';
+import { TopicDTO } from '../../global-models/TopicDTO';
 
 @Component({
   selector: 'post-list',
@@ -41,7 +41,7 @@ export class PostListComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private topicService: TopicService,
+    private topicService: TopicPostService,
     private loginService: LoginService,
     private activeRoute: ActivatedRoute
   ) {}

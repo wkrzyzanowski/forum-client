@@ -1,12 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { TopicService } from './services/topic-service/topic-service.service';
-import { TopicDTO } from './model/TopicDTO';
-import { UserService } from './../global-services/user-service/user-service.service';
-import { UserDTO } from './model/UserDTO';
+import { TopicPostService } from '../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
+import { TopicDTO } from '../global-models/TopicDTO';
+import { UserService } from '../global-services/http-services/user-service/user-service.service';
+import { UserDTO } from '../global-models/UserDTO';
 import { TopicWithUserDetails } from './model/UserTopicDTO';
-import { LoginService } from './../global-services/login-service/login-service.service';
-import { stringify } from 'querystring';
-import { IfStmt } from '@angular/compiler';
 
 @Component({
   selector: 'topic-page',
@@ -17,7 +14,7 @@ export class TopicPageComponent implements OnInit {
   private topicUserList: TopicWithUserDetails[] = [];
 
   constructor(
-    private topicService: TopicService,
+    private topicService: TopicPostService,
     private userService: UserService
   ) {}
 

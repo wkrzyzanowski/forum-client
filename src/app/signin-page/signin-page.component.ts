@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { LoginService } from '../global-services/login-service/login-service.service';
-import { UserDTO } from '../topic-page/model/UserDTO';
+import { UserDTO } from '../global-models/UserDTO';
+import { UserService } from '../global-services/http-services/user-service/user-service.service';
 
 @Component({
   selector: 'app-signin-page',
@@ -15,7 +15,7 @@ export class SigninPageComponent implements OnInit {
   isCreationFailure: boolean = false;
   isCreationSuccess: boolean = false;
 
-  constructor(private router: Router, private loginService: LoginService) {
+  constructor(private router: Router, private userService: UserService) {
     this.createNewUserForm = this.createFormGroup();
   }
 
@@ -37,7 +37,7 @@ export class SigninPageComponent implements OnInit {
       newUser.email = this.createNewUserForm.get('email').value;
       newUser.password = this.createNewUserForm.get('password').value;
 
-      this.loginService.createNewUser(newUser).subscribe(
+      this.userService.createNewUser(newUser).subscribe(
         respo => {
           this.isCreationSuccess = true;
           this.createNewUserForm = this.createFormGroup();

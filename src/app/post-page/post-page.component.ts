@@ -1,18 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { TopicService } from './../topic-page/services/topic-service/topic-service.service';
-import { TopicWithPostAndUserDetails } from './model/TopicWithPostAndUserDetails';
-import { HttpResponse } from '@angular/common/http';
+import { TopicPostService } from '../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
 import { TopicWithUserDetails } from './../topic-page/model/UserTopicDTO';
 import { PostWithUserDetails } from './model/PostWithUserDetails';
-import { TopicDTO } from '../topic-page/model/TopicDTO';
-import { UserDTO } from '../topic-page/model/UserDTO';
-import { BehaviorSubject } from 'rxjs';
+import { UserDTO } from '../global-models/UserDTO';
 import { TopicWithPostResponse } from './model/TopicWithPostResponse';
-import { UserService } from './../global-services/user-service/user-service.service';
-import { ThrowStmt } from '@angular/compiler';
-import { LoginService } from '../global-services/login-service/login-service.service';
+import { UserService } from '../global-services/http-services/user-service/user-service.service';
+import { LoginService } from '../global-services/http-services/login-service/login-service.service';
 
 @Component({
   selector: 'post-page',
@@ -32,7 +26,7 @@ export class PostPageComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private loginService: LoginService,
-    private topicService: TopicService,
+    private topicService: TopicPostService,
     private userService: UserService
   ) {}
 

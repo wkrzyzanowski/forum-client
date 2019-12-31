@@ -1,16 +1,8 @@
 import { Component, OnInit, EventEmitter, Output, Input } from '@angular/core';
-import { TopicService } from '../services/topic-service/topic-service.service';
-import { UserService } from 'src/app/global-services/user-service/user-service.service';
-import { LoginService } from 'src/app/global-services/login-service/login-service.service';
+import { TopicPostService } from '../../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
+import { LoginService } from 'src/app/global-services/http-services/login-service/login-service.service';
 import { TopicWithUserDetails } from '../model/UserTopicDTO';
-import { TopicDTO } from '../model/TopicDTO';
-import { UserDTO } from '../model/UserDTO';
-import {
-  FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder
-} from '@angular/forms';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'topic-form',
@@ -28,7 +20,7 @@ export class TopicFormComponent implements OnInit {
 
   constructor(
     private loginService: LoginService,
-    private topicService: TopicService
+    private topicService: TopicPostService
   ) {
     this.createNewTopicForm = this.createFormGroup();
   }
@@ -47,7 +39,7 @@ export class TopicFormComponent implements OnInit {
           this.createNewTopicForm.get('postContent').value,
           this.createNewTopicForm.get('authorUuid').value
         )
-        .subscribe(newTopic => {
+        .subscribe(() => {
           this.loadTopicEmitter.emit(true);
         });
       this.createNewTopicForm = this.createFormGroup();

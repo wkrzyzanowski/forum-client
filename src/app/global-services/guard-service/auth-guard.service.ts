@@ -6,7 +6,7 @@ import {
 } from "@angular/router";
 import { Observable } from "rxjs";
 import { Injectable } from "@angular/core";
-import { LoginService } from "../login-service/login-service.service";
+import { LoginService } from "../http-services/login-service/login-service.service";
 import { CookieService } from "ngx-cookie-service";
 
 @Injectable()

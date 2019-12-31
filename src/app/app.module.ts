@@ -13,7 +13,7 @@ import { PostPageComponent } from './post-page/post-page.component';
 import { NotFoundPageComponent } from './not-found-page/not-found-page.component';
 import { HeaderBarComponent } from './header-bar/header-bar.component';
 import { AuthGuard } from './global-services/guard-service/auth-guard.service';
-import { LoginService } from './global-services/login-service/login-service.service';
+import { LoginService } from './global-services/http-services/login-service/login-service.service';
 import { TopicFormComponent } from './topic-page/topic-form/topic-form.component';
 import { TopicListComponent } from './topic-page/topic-list/topic-list.component';
 import { PostListComponent } from './post-page/post-list/post-list.component';
