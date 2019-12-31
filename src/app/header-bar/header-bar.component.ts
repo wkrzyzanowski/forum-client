@@ -1,14 +1,12 @@
-import { Component, OnInit, SimpleChanges, Input } from "@angular/core";
-import { LoginService } from "../global-services/http-services/login-service/login-service.service";
-import { AuthResponse } from "../global-services/http-services/login-service/AuthResponse";
-import { BehaviorSubject } from "rxjs";
-import { CookieService } from "ngx-cookie-service";
-import { LoggedUser } from "../global-models/LoggedUser";
+import { Component, OnInit } from '@angular/core';
+import { LoginService } from '../global-services/http-services/login-service/login-service.service';
+import { CookieService } from 'ngx-cookie-service';
+import { LoggedUser } from '../global-models/LoggedUser';
 
 @Component({
-  selector: "header-bar",
-  templateUrl: "./header-bar.component.html",
-  styleUrls: ["./header-bar.component.css"]
+  selector: 'header-bar',
+  templateUrl: './header-bar.component.html',
+  styleUrls: ['./header-bar.component.css']
 })
 export class HeaderBarComponent implements OnInit {
   loggedUser: LoggedUser;
@@ -29,10 +27,10 @@ export class HeaderBarComponent implements OnInit {
   }
 
   getUsername(): string {
-    return this.cookieService.get("username");
+    return this.cookieService.get('username');
   }
 
   getUuid(): string {
-    return this.cookieService.get("uuid");
+    return this.cookieService.get('uuid');
   }
 }

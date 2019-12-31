@@ -3,11 +3,11 @@ import {
   ActivatedRouteSnapshot,
   RouterStateSnapshot,
   Router
-} from "@angular/router";
-import { Observable } from "rxjs";
-import { Injectable } from "@angular/core";
-import { LoginService } from "../http-services/login-service/login-service.service";
-import { CookieService } from "ngx-cookie-service";
+} from '@angular/router';
+import { Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { LoginService } from '../http-services/login-service/login-service.service';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class AuthGuard implements CanActivate {
@@ -26,20 +26,20 @@ export class AuthGuard implements CanActivate {
       .then((authenticated: boolean) => {
         if (authenticated) {
           if (
-            this.cookieService.check("username") &&
-            this.cookieService.check("uuid") &&
-            this.cookieService.get("username") ===
+            this.cookieService.check('username') &&
+            this.cookieService.check('uuid') &&
+            this.cookieService.get('username') ===
               this.loginService.loggedUser.username &&
-            this.cookieService.get("uuid") === this.loginService.loggedUser.uuid
+            this.cookieService.get('uuid') === this.loginService.loggedUser.uuid
           ) {
             return true;
           } else {
             this.loginService.loggedIn = false;
-            this.router.navigateByUrl("/login");
+            this.router.navigateByUrl('/login');
           }
         } else {
           this.loginService.loggedIn = false;
-          this.router.navigateByUrl("/login");
+          this.router.navigateByUrl('/login');
         }
       });
   }

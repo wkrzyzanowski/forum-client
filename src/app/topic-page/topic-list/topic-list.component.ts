@@ -1,9 +1,7 @@
 import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
 import { TopicDTO } from '../../global-models/TopicDTO';
 import { TopicWithUserDetails } from '../model/UserTopicDTO';
-import { UserDTO } from '../../global-models/UserDTO';
 import { TopicPostService } from '../../global-services/http-services/topic-and-post-service/topic-and-post-service.service';
-import { UserService } from 'src/app/global-services/http-services/user-service/user-service.service';
 import { LoginService } from 'src/app/global-services/http-services/login-service/login-service.service';
 
 @Component({
@@ -41,7 +39,7 @@ export class TopicListComponent implements OnInit {
     if (confirmation === true) {
       this.topicService
         .deleteTopicByUuidWithAllPosts(topic.uuid)
-        .subscribe((response: TopicDTO) => {
+        .subscribe(() => {
           this.loadTopicEmitter.emit(true);
         });
     }
